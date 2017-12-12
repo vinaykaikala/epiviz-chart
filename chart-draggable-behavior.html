@@ -13,32 +13,26 @@
          */
         _initializeDraggable: function() {
             var self = this;
-            var parentId = $(this).parent().parent().attr("id");
-            $(self).draggable({
-                grid: [10, 10],
-                start: self.hostDragged,
-                stop: self.hostDropped,
-                cursor: "crosshair",
-                connectToSortable: "epiviz-environment #chartContainer",
-                obstacle: "#test",
-                iframeFix: true,
-            });
-            $(self).resizable({
+            var parentId = $(this).parent().parent()[0];
+            console.log(self);
+            console.log(parentId);
+            // $(self).draggable({
+            //     grid: [10, 10],
+            //     start: self.hostDragged,
+            //     stop: self.hostDropped,
+            //     cursor: "crosshair",
+            //     connectToSortable: "epiviz-environment #chartContainer",
+            //     obstacle: "#test",
+            //     iframeFix: true,
+            // });
+            $(parentId).resizable({
                 stop: self._onResize,
                 minHeight: self.chartType ? self.chartType.defaultHeight() : 0,
                 minWidth: self.chartType ? self.chartType.defaultWidth() : 0,
             });
         },
 
-        hostDragged: function(e, ui) {
-            this.hostDragging = true;
-        },
-
-        hostDropped: function(e, ui) {
-            this.hostDragging = false;
-        },
-
-        ready: function() {
+        attached: function() {
             this._initializeDraggable();
         }
     }

@@ -10,6 +10,7 @@
 <link rel="import" href="chart-workspace-behavior.html">
 <link rel="import" href="chart-add-behavior.html">
 <link rel="import" href="chart-remove.html">
+<link rel="import" href="chart-grid-behavior.html">
 
 <!-- Polymer Elements -->
 <link rel="import" href="../paper-header-panel/paper-header-panel.html">
@@ -112,7 +113,7 @@ To use, add `<epiviz-environment>` in the page
                 <epiviz-add-chart></epiviz-add-chart> 
             </div>
             <div id="chartContainer" class="content fit">
-                <content id="chartEnv" select=".charts"></content>
+                <content id="chartEnv" select=".item"></content>
             </div>
         </paper-header-panel>
     </template>
@@ -120,7 +121,7 @@ To use, add `<epiviz-environment>` in the page
     <script>
         Polymer({
             is: 'epiviz-environment',
-            behaviors: [epiviz.ChartDataBehavior, epiviz.ChartWorkspaceBehavior, epiviz.ChartAddBehavior, Polymer.IronResizableBehavior],
+            behaviors: [epiviz.ChartDataBehavior, epiviz.ChartWorkspaceBehavior, epiviz.ChartAddBehavior, Polymer.IronResizableBehavior, epiviz.ChartGridBehavior],
 
             properties: {
                 
@@ -478,9 +479,11 @@ To use, add `<epiviz-environment>` in the page
                                     }
                             }
                             else {
-                                if(!node.data) {
-                                    self._getElementData(node, self, self.measurements);
-                                }
+                                // if(!node.data) {
+                                    var chart = node.firstChild.firstChild;
+                                    console.log(chart);
+                                    self._getElementData(chart, self, self.measurements);
+                                // }
                             }
                         });
 

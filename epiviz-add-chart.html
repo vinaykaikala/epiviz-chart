@@ -192,7 +192,17 @@ All charts automatically create an instance of `<epiviz-add-chart>` element.
                             var source = $('#form').form('get value', 'source');
                             var measurements = data.subset(function(m) { return m.datasourceGroup() === source });
                             chartElem.setAttribute("measurements", JSON.stringify(measurements.raw()));
-                            Polymer.dom(envElement).appendChild(chartElem);
+
+                            var item = document.createElement("div");
+                            item.className = "item";
+                            var itemContainer = document.createElement("div");
+                            itemContainer.className = "item-container";
+
+                            item.appendChild(itemContainer);
+                            itemContainer.appendChild(chartElem);
+                            console.log(itemContainer)
+
+                            Polymer.dom(envElement).appendChild(item);
                             // self.$.modal.close();
                         }
                     });
@@ -205,7 +215,17 @@ All charts automatically create an instance of `<epiviz-add-chart>` element.
 
                     showModal(source, data.raw(), function(selected) {
                         chartElem.setAttribute("measurements", JSON.stringify(selected));
-                        Polymer.dom(envElement).appendChild(chartElem);
+
+                        var item = document.createElement("div");
+                        item.className = "item";
+                        var itemContainer = document.createElement("div");
+                        itemContainer.className = "item-container";
+
+                        item.appendChild(itemContainer);
+                        itemContainer.appendChild(chartElem);
+                        console.log(item);
+                        console.log(envElement);
+                        Polymer.dom(envElement).appendChild(item);
                         // self.$.modal.close();
                     });
                     $('#sourcemodal').modal('show');
