@@ -11,7 +11,7 @@
 
 <!-- Epiviz data behaviors dependency -->
 <link rel="import" href="chart-data-behavior.html">
-<link rel="import" href="chart-add-behavior.html">
+<!-- <link rel="import" href="chart-add-behavior.html"> -->
 
 <!-- Chart elements dependency -->
 <link rel="import" href="epiviz-genes-track.html">
@@ -550,14 +550,16 @@ To use, add `<epiviz-navigation>` in the page
                 if(numChildren > 0) {self.set('_isEmpty', true);}
                 for (var index = 0; index < numChildren; index++) {
                     var currentChild = self.getEffectiveChildren()[index];
-                    if(currentChild == undefined || currentChild.plotId == undefined) {return ;}
-                    currentChild.set("_hideLoader", false);
-                    currentChild.range = self.range;
-                    var measurements = self.measurements;
-                    if(self._parentContainer) {
-                        measurements = self._parentContainer.measurements;
+                    if(currentChild.nodeName.indexOf("JSON") == -1) {
+                        if(currentChild == undefined || currentChild.plotId == undefined) {return ;}
+                        currentChild.set("_hideLoader", false);
+                        currentChild.range = self.range;
+                        var measurements = self.measurements;
+                        if(self._parentContainer) {
+                            measurements = self._parentContainer.measurements;
+                        }
+                        self._getElementData(currentChild, self, measurements);
                     }
-                    self._getElementData(currentChild, self, measurements);
                 }
 
                 self.chartObject = new epiviz.ui.charts.ChartObject(self.plotId, self.start, self.end, undefined, undefined, undefined, undefined, undefined, self.chr);
@@ -858,7 +860,7 @@ To use, add `<epiviz-navigation>` in the page
                     self._observer =
                     Polymer.dom(self.$$("#chartNav")).observeNodes(function(info) {
                         info.addedNodes.forEach(function(node) {
-                            if(node.nodeName.indexOf("EPIVIZ-") != -1) {
+                            if(node.nodeName.indexOf("EPIVIZ-") != -1 && node.nodeName.indexOf("JSON") == -1) {
                                 // self._updateChart(node.plotId);
                                 node._parentContainer = self;
                                 var measurements = self.measurements;
